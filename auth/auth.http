@@ -1,0 +1,45 @@
+@baseUrl = https://ticketing.dev/api/users
+
+###
+# Valid signup
+POST {{baseUrl}}/signup
+content-type: application/json
+
+{
+    "email": "test@email.com",
+    "password": "password"
+}
+
+###
+# Invalid signup
+POST {{baseUrl}}/signup
+content-type: application/json
+
+{
+    "email": "test",
+    "password": "prd"
+}
+
+###
+# Valid signin
+POST {{baseUrl}}/signin
+content-type: application/json
+
+{
+    "email": "test@email.com",
+    "password": "password"
+}
+
+###
+# Valid current-user
+GET {{baseUrl}}/current-user
+content-type: application/json
+
+###
+# Valid signout
+POST {{baseUrl}}/signout
+content-type: application/json
+
+###
+# Not found
+POST {{baseUrl}}/invalid-route

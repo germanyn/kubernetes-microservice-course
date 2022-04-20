@@ -1,0 +1,39 @@
+@authUrl = https://ticketing.dev/api/users
+@baseUrl = https://ticketing.dev/api/tickets
+
+###
+# Valid signup
+# @name signup
+POST {{authUrl}}/signup
+content-type: application/json
+
+{
+    "email": "test@email.com",
+    "password": "password"
+}
+
+###
+# Create ticket
+# @name createTicket
+POST {{baseUrl}}
+content-type: application/json
+
+{
+    "title": "Concert",
+    "price": 10
+}
+
+###
+# Fetch tickets
+GET {{baseUrl}}
+content-type: application/json
+
+###
+# Update ticket
+PUT {{baseUrl}}/{{createTicket.response.body.id}}
+content-type: application/json
+
+{
+    "price": 15,
+    "title": "Concert Updated"
+}
