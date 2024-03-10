@@ -1,50 +1,49 @@
-apiVersion: skaffold/v2alpha3
+apiVersion: skaffold/v4beta9
 kind: Config
 deploy:
-  kubectl:
-    manifests:
-      - ./infra/k8s/*
+  kubectl: {}
+manifests:
+  rawYaml:
+    - ./infra/k8s/*
 build:
-  # local:
-  #   push: false
-  googleCloudBuild:
-    projectId: ticketing-335102
+  local:
+    push: false
   artifacts:
-    - image: us.gcr.io/ticketing-335102/auth
+    - image: ggticketing/auth
       context: auth
       docker:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: 'src/**/*.ts'
+          - src: src/**/*.ts
             dest: .
-    - image: us.gcr.io/ticketing-335102/tickets
+    - image: ggticketing/tickets
       context: tickets
       docker:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: 'src/**/*.ts'
+          - src: src/**/*.ts
             dest: .
-    - image: us.gcr.io/ticketing-335102/orders
+    - image: ggticketing/orders
       context: orders
       docker:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: 'src/**/*.ts'
+          - src: src/**/*.ts
             dest: .
-    - image: us.gcr.io/ticketing-335102/client
+    - image: ggticketing/client
       context: client
       docker:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: 'src/**/*.tsx'
+          - src: src/**/*.tsx
             dest: .
-          - src: 'src/**/*.ts'
+          - src: src/**/*.ts
             dest: .
-          - src: 'src/**/*.js'
+          - src: src/**/*.js
             dest: .
-          - src: 'src/**/*.jsx'
+          - src: src/**/*.jsx
             dest: .

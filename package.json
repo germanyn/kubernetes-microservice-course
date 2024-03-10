@@ -2,5 +2,11 @@
   "dependencies": {
     "@types/mongoose": "^5.11.97",
     "node-nats-streaming": "^0.3.2"
-  }
+  },
+  "workspaces": [
+    "auth",
+    "client",
+    "orders",
+    "tickets"
+  ]
 }

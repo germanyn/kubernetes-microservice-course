@@ -41,6 +41,7 @@ const ticketSchema = new Schema<TicketDoc, TicketModel>({
 })
 
 ticketSchema.set('versionKey', 'version')
+// @ts-ignore
 ticketSchema.plugin(updateIfCurrentPlugin)
 
 ticketSchema.static('build', (attrs: TicketAttrs) => new Ticket(attrs))

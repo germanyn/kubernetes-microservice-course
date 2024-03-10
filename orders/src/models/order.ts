@@ -54,6 +54,7 @@ const orderSchema = new Schema<OrderDoc, OrderModel>({
 })
 
 orderSchema.set('versionKey', 'version')
+// @ts-ignore
 orderSchema.plugin(updateIfCurrentPlugin)
 
 orderSchema.static('build', (attrs: OrderAttrs) => new Order(attrs))
