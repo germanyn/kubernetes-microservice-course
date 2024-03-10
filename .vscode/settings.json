@@ -4,5 +4,6 @@
         "**/bower_components": true,
         "**/*.code-search": true,
         "**/nats-test": true,
-    }
+    },
+    "typescript.tsdk": "node_modules\\typescript\\lib"
 }

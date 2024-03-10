@@ -1,6 +1,7 @@
 import { Document, Model, model, Schema } from 'mongoose'
 import { TICKET_REF } from './contants'
 import { Order, OrderStatus } from './order'
+import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 
 interface TicketAttrs {
     id?: string
@@ -16,6 +17,7 @@ interface TicketModel extends Model<TicketDoc> {
 export interface TicketDoc extends Document {
     title: string
     price: number
+    version: number
     isReserved: () => Promise<boolean>
 }
 
@@ -37,6 +39,10 @@ const ticketSchema = new Schema<TicketDoc, TicketModel>({
         }
     }
 })
+
+ticketSchema.set('versionKey', 'version')
+// @ts-ignore
+ticketSchema.plugin(updateIfCurrentPlugin)
 
 ticketSchema.static('build', ({id, ...attrs}: TicketAttrs) => new Ticket({
     ...attrs,
