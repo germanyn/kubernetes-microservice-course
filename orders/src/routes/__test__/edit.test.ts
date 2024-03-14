@@ -1,6 +1,6 @@
 import { Types } from 'mongoose'
 import request from 'supertest'
-import { OrderUpdatedPublisher } from '../../events/publishers/order-updated-publisher'
+import { OrderCancelledPublisher } from '../../events/publishers/order-updated-publisher'
 import { app } from '../../infra/app'
 import { Order, OrderStatus } from '../../models/order'
 import { Ticket } from '../../models/ticket'
@@ -97,12 +97,12 @@ it('prevents order cancel status change', async () => {
     const order = await buildOrder(userId);
     
     await request(app)
-    .patch(`/api/orders/${order.id}`)
-    .set('Cookie', global.signin(userId))
-    .send({ status: OrderStatus.Canceled })
-    .expect(200)
+        .patch(`/api/orders/${order.id}`)
+        .set('Cookie', global.signin(userId))
+        .send({ status: OrderStatus.Canceled })
+        .expect(200)
     
-    const publisherSpy = jest.spyOn(OrderUpdatedPublisher.prototype, 'publish')
+    const publisherSpy = jest.spyOn(OrderCancelledPublisher.prototype, 'publish')
     const response = await request(app)
         .patch(`/api/orders/${order.id}`)
         .set('Cookie', global.signin(userId))
@@ -116,7 +116,7 @@ it('prevents order cancel status change', async () => {
 it('emits a order update event', async () => {
     const userId = new Types.ObjectId().toHexString();
     const order = await buildOrder(userId);
-    const spy = jest.spyOn(OrderUpdatedPublisher.prototype, 'publish')
+    const spy = jest.spyOn(OrderCancelledPublisher.prototype, 'publish')
 
     await request(app)
         .patch(`/api/orders/${order.id}`)
@@ -127,6 +127,5 @@ it('emits a order update event', async () => {
     expect(spy).toBeCalledWith({
         id: order.id,
         version: 1,
-        status: OrderStatus.Canceled,
     })
 })

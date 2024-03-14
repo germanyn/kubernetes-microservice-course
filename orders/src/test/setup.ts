@@ -42,4 +42,4 @@ beforeEach(async () => {
 afterAll(async () => {
     await mongo.stop()
     await mongoose.connection.close()
-})
+}, 5000)

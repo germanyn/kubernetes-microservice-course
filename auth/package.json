@@ -19,7 +19,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@germanyn-org/tickets-common": "^1.0.2",
+    "@germanyn-org/tickets-common": "file:../tickets-common",
     "@types/cookie-session": "^2.0.43",
     "@types/express": "^4.17.13",
     "@types/jsonwebtoken": "^8.5.5",
