@@ -121,3 +121,31 @@ it('publishes an event', async () => {
 
     expect(natsWrapper.client.publish).toBeCalledTimes(2)
 })
+
+it('rejects reserved ticket', async () => {
+    const cookies = global.signin()
+    const response = await request(app)
+        .post('/api/tickets')
+        .set('Cookie', cookies)
+        .send({
+            title: 'Previous title',
+            price: 10,
+        })
+
+    const ticket = await Ticket.findByIdAndUpdate(response.body.id, { orderId: new Types.ObjectId().toHexString() })
+    if (!ticket) {
+        throw new Error('Test ticket not found')
+    }
+
+    const newTitle = 'New title'
+    const newPrice = 55
+
+    await request(app)
+        .put(`/api/tickets/${response.body.id}`)
+        .set('Cookie', cookies)
+        .send({
+            title: newTitle,
+            price: newPrice,
+        })
+        .expect(400)
+})

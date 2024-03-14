@@ -1,4 +1,4 @@
-import { ForbiddenError, NotFoundError, requireAuth, validateRequest } from "@germanyn-org/tickets-common";
+import { BadRequestError, ForbiddenError, NotFoundError, requireAuth, validateRequest } from "@germanyn-org/tickets-common";
 import { Request, Response, Router } from "express";
 import { body } from "express-validator";
 import { natsWrapper } from "../libs/nats-wrapper";
@@ -25,10 +25,15 @@ router.put(
 
         if (ticket.userId !== req.currentUser!.id) throw new ForbiddenError()
 
+        if (ticket.orderId) {
+            throw new BadRequestError('Cannot edit a reserved ticket')
+        }
+
         ticket.set({
             title:req.body.title,
             price:req.body.price,
         })
+
         await ticket.save()
         new TicketUpdatedPublisher(natsWrapper.client).publish({
             id: ticket.id,

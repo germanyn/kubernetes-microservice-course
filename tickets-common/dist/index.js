@@ -20,7 +20,7 @@ __exportStar(require("./events/event"), exports);
 __exportStar(require("./events/subjects"), exports);
 __exportStar(require("./events/orders/types/order-status"), exports);
 __exportStar(require("./events/orders/order-created-event"), exports);
-__exportStar(require("./events/orders/order-updated-event"), exports);
+__exportStar(require("./events/orders/order-cancelled-event"), exports);
 __exportStar(require("./events/tickets/ticket-created-event"), exports);
 __exportStar(require("./events/tickets/ticket-updated-event"), exports);
 __exportStar(require("./errors/BadRequestError"), exports);

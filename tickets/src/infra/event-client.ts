@@ -1,3 +1,5 @@
+import { OrderCancelledListener } from "../events/listeners/order-cancelled-listener"
+import { OrderCreatedListener } from "../events/listeners/order-created-listener"
 import { natsWrapper } from "../libs/nats-wrapper"
 
 export async function startEventClient() {
@@ -12,4 +14,6 @@ export async function startEventClient() {
         process.env.NATS_CLIENT_ID,
         process.env.NATS_URL,
     )
+    new OrderCreatedListener(natsWrapper.client).listen()
+    new OrderCancelledListener(natsWrapper.client).listen()
 }

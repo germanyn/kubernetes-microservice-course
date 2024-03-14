@@ -1,6 +1,6 @@
 import { Types } from 'mongoose'
 import request from 'supertest'
-import { OrderCancelledPublisher } from '../../events/publishers/order-updated-publisher'
+import { OrderCancelledPublisher } from '../../events/publishers/order-cancelled-publisher'
 import { app } from '../../infra/app'
 import { Order, OrderStatus } from '../../models/order'
 import { Ticket } from '../../models/ticket'

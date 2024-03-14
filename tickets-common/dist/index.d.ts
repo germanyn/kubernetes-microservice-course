@@ -4,7 +4,7 @@ export * from './events/event';
 export * from './events/subjects';
 export * from './events/orders/types/order-status';
 export * from './events/orders/order-created-event';
-export * from './events/orders/order-updated-event';
+export * from './events/orders/order-cancelled-event';
 export * from './events/tickets/ticket-created-event';
 export * from './events/tickets/ticket-updated-event';
 export * from './errors/BadRequestError';
