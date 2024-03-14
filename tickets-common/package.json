@@ -1,6 +1,6 @@
 {
   "name": "@germanyn-org/tickets-common",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -11,7 +11,7 @@
   "scripts": {
     "clean": "del-cli ./dist/*",
     "build": "npm run clean && tsc",
-    "pub": "npm run build && npm version patch && npm publish"
+    "pub": "git add . && git commit -m \"Update dist\" && npm version patch && npm run build && npm publish"
   },
   "keywords": [],
   "author": "",
