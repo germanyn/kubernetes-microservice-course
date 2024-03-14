@@ -11,7 +11,7 @@
   "scripts": {
     "clean": "del-cli ./dist/*",
     "build": "npm run clean && tsc",
-    "pub": "npm run build && npm publish"
+    "pub": "npm run build && npm version patch && npm publish"
   },
   "keywords": [],
   "author": "",
