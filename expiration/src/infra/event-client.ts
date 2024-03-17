@@ -1,3 +1,4 @@
+import { OrderCreatedListener } from "../events/listeners/order-created-listener"
 import { natsWrapper } from "../libs/nats-wrapper"
 
 export async function startEventClient() {
@@ -21,6 +22,5 @@ export async function startEventClient() {
     process.on('SIGINT', () => natsWrapper.client.close())
     process.on('SIGTERM', () => natsWrapper.client.close())
 
-    // new OrderCreatedListener(natsWrapper.client).listen()
-    // new OrderCancelledListener(natsWrapper.client).listen()
+    new OrderCreatedListener(natsWrapper.client).listen()
 }
