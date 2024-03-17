@@ -3,6 +3,8 @@ export * from './events/base-publisher'
 export * from './events/event'
 export * from './events/subjects'
 
+export * from './events/expiration/expiration-complete'
+
 export * from './events/orders/types/order-status'
 export * from './events/orders/order-created-event'
 export * from './events/orders/order-cancelled-event'
