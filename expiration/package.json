@@ -6,7 +6,7 @@
   "scripts": {
     "start": "ts-node-dev --poll src/index.ts",
     "test": "jest --watchAll --no-cache --detectOpenHandles",
-    "docker": "docker build -t germanyn/expiration ."
+    "docker": "docker build -t ggticketing/expiration ."
   },
   "jest": {
     "preset": "ts-jest",

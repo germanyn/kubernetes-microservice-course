@@ -19,5 +19,5 @@ POST {{baseUrl}}
 content-type: application/json
 
 {
-    "ticketId": "65f3847f7a2084117370114a"
+    "ticketId": "65f73cf7420ff5cc90d9df90"
 }
