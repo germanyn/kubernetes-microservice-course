@@ -33,6 +33,14 @@ build:
         manual:
           - src: src/**/*.ts
             dest: .
+    - image: ggticketing/expiration
+      context: services/expiration
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
     - image: ggticketing/client
       context: client
       docker:
@@ -46,12 +54,4 @@ build:
           - src: src/**/*.js
             dest: .
           - src: src/**/*.jsx
-            dest: .
-    - image: ggticketing/expiration
-      context: services/expiration
-      docker:
-        dockerfile: Dockerfile
-      sync:
-        manual:
-          - src: 'src/**/*.ts'
             dest: .
