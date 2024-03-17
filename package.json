@@ -4,11 +4,8 @@
     "node-nats-streaming": "^0.3.2"
   },
   "workspaces": [
-    "auth",
     "client",
-    "expiration",
-    "orders",
-    "tickets",
-    "tickets-common"
+    "tickets-common",
+    "services/**"
   ]
 }
