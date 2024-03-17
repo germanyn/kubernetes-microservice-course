@@ -22,7 +22,6 @@ jest.mock('../libs/nats-wrapper')
 
 let mongo: MongoMemoryServer
 beforeAll(async () => {
-    jest.setTimeout(30000)
     process.env.JWT_KEY = 'supertestsecret'
     mongo = await MongoMemoryServer.create()
     const mongoUri = mongo.getUri()
@@ -32,6 +31,7 @@ beforeAll(async () => {
 })
 
 beforeEach(async () => {
+    jest.setTimeout(30000)
     jest.clearAllMocks()
     const collections = await mongoose.connection.db.collections()
     for (let collection of collections) {
@@ -40,7 +40,6 @@ beforeEach(async () => {
 })
 
 afterAll(async () => {
-    jest.setTimeout(30000)
     await mongo.stop()
     await mongoose.connection.close()
 })

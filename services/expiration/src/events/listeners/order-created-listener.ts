@@ -9,9 +9,9 @@ export class OrderCreatedListener extends Listener<OrderCreatedEvent> {
 
     async onMessage(data: OrderCreatedEvent['data'], msg: Message) {
 
-        const delay = new Date(data.expiresAt).getTime()
-            - new Date().getTime()
-        console.log('Wating this many to process the cancel', delay)
+        const delay = new Date(data.expiresAt).getTime() - new Date().getTime()
+
+        console.log('Waiting this many to process the cancel', delay)
 
         expirationQueue.add({
             orderId: data.id,
