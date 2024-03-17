@@ -41,6 +41,14 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
+    - image: ggticketing/payments
+      context: services/payments
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
     - image: ggticketing/client
       context: client
       docker:
