@@ -126,6 +126,9 @@ it('emits a order update event', async () => {
         
     expect(spy).toBeCalledWith({
         id: order.id,
+        ticket: {
+            id: order.ticket.id,
+        },
         version: 1,
     })
 })

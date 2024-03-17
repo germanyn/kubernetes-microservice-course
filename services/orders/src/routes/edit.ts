@@ -36,7 +36,7 @@ router.patch(
         if (order.isModified()) {
             await order.save()
 
-            if (newStatus !== oldStatus && oldStatus === OrderStatus.Canceled) {
+            if (newStatus !== oldStatus && newStatus === OrderStatus.Canceled) {
                 await new OrderCancelledPublisher(natsWrapper.client).publish({
                     id: order.id,
                     version: order.version,
