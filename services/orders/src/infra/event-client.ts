@@ -1,3 +1,4 @@
+import { ExpirationCompleteListener } from "../events/listeners/expiration-complete-listener"
 import { TicketCreatedListener } from "../events/listeners/ticket-created-listener"
 import { TicketUpdatedListener } from "../events/listeners/ticket-updated-listener"
 import { natsWrapper } from "../libs/nats-wrapper"
@@ -16,4 +17,5 @@ export async function startEventClient() {
     )
     new TicketCreatedListener(natsWrapper.client).listen()
     new TicketUpdatedListener(natsWrapper.client).listen()
+    new ExpirationCompleteListener(natsWrapper.client).listen()
 }
