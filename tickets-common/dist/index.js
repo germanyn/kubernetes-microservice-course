@@ -18,6 +18,7 @@ __exportStar(require("./events/base-listener"), exports);
 __exportStar(require("./events/base-publisher"), exports);
 __exportStar(require("./events/event"), exports);
 __exportStar(require("./events/subjects"), exports);
+__exportStar(require("./events/expiration/expiration-complete"), exports);
 __exportStar(require("./events/orders/types/order-status"), exports);
 __exportStar(require("./events/orders/order-created-event"), exports);
 __exportStar(require("./events/orders/order-cancelled-event"), exports);
