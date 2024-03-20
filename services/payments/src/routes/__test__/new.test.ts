@@ -1,7 +1,8 @@
-import { OrderStatus } from '@germanyn-org/tickets-common'
+import { OrderStatus, PaymentCreatedEventData } from '@germanyn-org/tickets-common'
 import { Types } from 'mongoose'
 import request from 'supertest'
 import { app } from '../../infra/app'
+import { natsWrapper } from '../../libs/nats-wrapper'
 import { stripe } from '../../libs/stripe'
 import { Order } from '../../models/order'
 import { Payment } from '../../models/payment'
@@ -117,4 +118,40 @@ it('successfully create a payment', async () => {
     expect(payment).not.toBe(null)
     expect(payment!.chargeId).toBe('stripe-id')
     expect(payment!.orderId).toBe(order.id)
+})
+
+it('create payment created event', async () => {
+    const userId = new Types.ObjectId().toHexString()
+    
+    const token = 'tok_visa'
+    const order = Order.build({
+        id: new Types.ObjectId().toHexString(),
+        userId,
+        version: 0,
+        price: 20,
+        status: OrderStatus.Created,
+    })
+    
+    await order.save()
+
+    const response = await request(app)
+        .post('/api/payments')
+        .set('Cookie', global.signin(userId))
+        .send({
+            token,
+            orderId: order.id,
+        })
+        .expect(201)
+
+        expect(natsWrapper.client.publish).toHaveBeenCalled()
+
+    const payment = await Payment.findById(response.body.id)
+
+    const paymentCreatedData: PaymentCreatedEventData = JSON.parse(
+        jest.mocked(natsWrapper.client).publish.mock.calls[0][1] as string
+    )
+    expect(paymentCreatedData.id).toEqual(payment!.id)
+    expect(paymentCreatedData.orderId).toEqual(payment!.orderId)
+    expect(paymentCreatedData.chargeId).toEqual(payment!.chargeId)
+    expect(paymentCreatedData.version).toEqual(0)
 })

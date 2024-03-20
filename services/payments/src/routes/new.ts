@@ -1,6 +1,8 @@
 import { BadRequestError, NotFoundError, OrderStatus, requireAuth, UnauthorizedError, validateRequest } from "@germanyn-org/tickets-common";
 import { Request, Response, Router } from "express";
 import { body } from "express-validator";
+import { PaymentCreatedPublisher } from "../events/publishers/payment-created-publisher";
+import { natsWrapper } from "../libs/nats-wrapper";
 import { stripe } from "../libs/stripe";
 import { Order } from "../models/order";
 import { Payment } from "../models/payment";
@@ -41,6 +43,13 @@ router.post('',
             orderId: order.id,
         })
         await payment.save()
+
+        new PaymentCreatedPublisher(natsWrapper.client).publish({
+            id: payment.id,
+            version: payment.version,
+            orderId: payment.orderId,
+            chargeId: payment.chargeId,
+        })
 
         res.status(201).send({
             id: payment.id,
