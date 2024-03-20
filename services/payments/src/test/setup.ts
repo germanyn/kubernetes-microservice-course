@@ -19,6 +19,7 @@ global.signin = (userId = new mongoose.Types.ObjectId().toHexString()) => {
 }
 
 jest.mock('../libs/nats-wrapper')
+jest.mock('../libs/stripe')
 
 let mongo: MongoMemoryServer
 beforeAll(async () => {

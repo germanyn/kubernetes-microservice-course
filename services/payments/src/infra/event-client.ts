@@ -15,6 +15,6 @@ export async function startEventClient() {
         process.env.NATS_URL,
     )
 
-    new OrderCreatedListener(natsWrapper.client)
-    new OrderCancelledListener(natsWrapper.client)
+    new OrderCreatedListener(natsWrapper.client).listen()
+    new OrderCancelledListener(natsWrapper.client).listen()
 }

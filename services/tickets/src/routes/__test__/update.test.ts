@@ -132,11 +132,15 @@ it('rejects reserved ticket', async () => {
             price: 10,
         })
 
-    const ticket = await Ticket.findByIdAndUpdate(response.body.id, { orderId: new Types.ObjectId().toHexString() })
+    const ticket = await Ticket.findById(response.body.id)
     if (!ticket) {
         throw new Error('Test ticket not found')
     }
 
+    ticket.set({ orderId: new Types.ObjectId().toHexString() })
+
+    await ticket.save()
+    
     const newTitle = 'New title'
     const newPrice = 55
 

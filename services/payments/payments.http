@@ -1,0 +1,13 @@
+@authUrl = https://ticketing.dev/api/users
+@baseUrl = https://ticketing.dev/api/payments
+
+###
+# Create payment
+# @name createPayment
+POST {{baseUrl}}
+content-type: application/json
+
+{
+  "orderId": "65fb5d1fde3507d60cb28343",
+  "token": "tok_visa"
+}

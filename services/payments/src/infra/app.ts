@@ -7,6 +7,7 @@ import {
     errorHandler,
     NotFoundError,
 } from '@germanyn-org/tickets-common'
+import { createChargeRouter } from '../routes/new'
 
 export const app = express()
 app.set('trust proxy', true)
@@ -19,10 +20,7 @@ app.use(
 )
 app.use(currentUser)
 
-// app.use('/api/orders', createOrderRouter)
-// app.use('/api/orders', showOrderRouter)
-// app.use('/api/orders', indexOrderRouter)
-// app.use('/api/orders', editOrderRouter)
+app.use('/api/payments', createChargeRouter)
 
 app.all('*', async () => {
     throw new NotFoundError()
