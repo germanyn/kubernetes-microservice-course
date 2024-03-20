@@ -20,7 +20,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@germanyn-org/tickets-common": "^1.0.15",
+    "@germanyn-org/tickets-common": "^1.0.16",
     "@types/bull": "^4.10.0",
     "bull": "^4.12.2",
     "node-nats-streaming": "^0.3.2",
