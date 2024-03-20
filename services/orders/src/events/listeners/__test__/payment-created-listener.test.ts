@@ -1,26 +1,13 @@
-import { ExpirationCompleteEvent, OrderCancelledEvent, OrderStatus } from "@germanyn-org/tickets-common"
+import { PaymentCreatedEvent, OrderStatus, PaymentCreatedEventData } from "@germanyn-org/tickets-common"
 import { Types } from "mongoose"
 import { natsWrapper } from "../../../libs/nats-wrapper"
 import { Order } from "../../../models/order"
 import { Ticket } from "../../../models/ticket"
-import { ExpirationCompleteListener } from "../expiration-complete-listener"
+import { PaymentCreatedListeners } from "../payment-created-listener"
 
-it('updates the order status to cancelled', async () => {
+
+it('updates the order status to complete', async () => {
     const { data, msg, listener } = await setup()
-
-    await listener.onMessage(data, msg)
-
-    const updatedOrder = await Order.findById(data.orderId)
-    expect(updatedOrder!.status).toBe(OrderStatus.Canceled)
-})
-
-it('prevents cancelling a complete order', async () => {
-    const { data, msg, listener } = await setup()
-
-    const order = await Order.findById(data.orderId)
-
-    order!.set({ status: OrderStatus.Complete })
-    await order!.save()
 
     await listener.onMessage(data, msg)
 
@@ -28,19 +15,11 @@ it('prevents cancelling a complete order', async () => {
     expect(updatedOrder!.status).toBe(OrderStatus.Complete)
 })
 
-it('emits a order cancelled event', async () => {
-    const { data, msg, listener } = await setup()
+// it('emits a order complete event', async () => {
+//     const { data, msg, listener } = await setup()
 
-    await listener.onMessage(data, msg)
-
-    // write assertions to make sure ack function is called
-    expect(natsWrapper.client.publish).toHaveBeenCalled()
-
-    const orderCancelledEvent: OrderCancelledEvent['data'] = JSON.parse(
-        jest.mocked(natsWrapper.client).publish.mock.calls[0][1] as string
-    )
-    expect(orderCancelledEvent.id).toEqual(data.orderId)
-})
+//     await listener.onMessage(data, msg)
+// })
 
 it('acks the message', async () => {
     const { data, msg, listener } = await setup()
@@ -52,7 +31,7 @@ it('acks the message', async () => {
 
 async function setup() {
     // create a listener
-    const listener = new ExpirationCompleteListener(natsWrapper.client)
+    const listener = new PaymentCreatedListeners(natsWrapper.client)
 
     // create and save a ticket
     const ticket = Ticket.build({
@@ -71,8 +50,11 @@ async function setup() {
     await order.save()
 
     // create a fake data object
-    const data: ExpirationCompleteEvent['data'] = {
+    const data: PaymentCreatedEventData = {
+        id: new Types.ObjectId().toHexString(),
+        version: 0,
         orderId: order.id,
+        chargeId: new Types.ObjectId().toHexString(),
     }
 
     // create a fake msg object
