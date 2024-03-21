@@ -1,21 +1,55 @@
-import axios from "axios"
 import { NextPage } from "next"
-import { buildRequestClient } from "../api/buildRequestClient"
+import { CustomPageContext } from "./_app"
 
-export type LandingParams = {
+// @ts-ignore
+export const Landing: NextPage<LandingParams> = ({ currentUser, tickets }) => {
+    const ticketList = tickets.map(ticket => {
+        return (
+            <tr key={ticket.id}>
+                <td>{ticket.title}</td>
+                <td>{ticket.price}</td>
+            </tr>
+        )
+    })
+
+    return (
+        <div>
+            <h1></h1>
+            <table className="table">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {ticketList}
+                </tbody>
+            </table>
+        </div>
+    )
+}
+
+interface LandingParams {
     currentUser: any
+    tickets: Ticket[]
 }
 
-export const Landing: NextPage<LandingParams> = ({ currentUser }) => {
-    return currentUser
-        ? <h1>You're signed in</h1>
-        : <h1>You're NOT signed in</h1>
+interface Ticket {
+    id: string
+    price: number
+    title: string
+    userId: string
+    version: number
 }
 
-Landing.getInitialProps = async (context) => {
-    const client = buildRequestClient(context)
-    const { data } = await client.get('/api/users/current-user')
-    return data
+// @ts-ignore
+Landing.getInitialProps = async (context: CustomPageContext) => {
+    const { data } = await context.client.get('/api/tickets')
+    return {
+        tickets: data,
+        currentUser: context.currentUser,
+    }
 }
 
 export default Landing

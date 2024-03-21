@@ -22,9 +22,10 @@
   },
   "include": [
     "src/next-env.d.ts",
+    "src/globa.d.ts",
     "**/*.ts",
     "**/*.js",
-    "**/*.tsx"
+    "**/*.tsx",
   ],
   "exclude": [
     "node_modules"
