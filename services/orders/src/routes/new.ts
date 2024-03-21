@@ -9,8 +9,8 @@ import { Ticket } from "../models/ticket";
 
 const router = Router()
 
-// const EXPIRATION_DURATION_SECONDS = 1 * 15;
-const EXPIRATION_DURATION_SECONDS = 15 * 60;
+const EXPIRATION_DURATION_SECONDS = 1 * 60;
+// const EXPIRATION_DURATION_SECONDS = 15 * 60;
 
 router.post(
     '/',

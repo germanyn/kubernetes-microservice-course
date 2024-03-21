@@ -1,17 +1,18 @@
+import { Order } from "@stripe/stripe-js"
 import { NextPage } from "next"
+import Router from "next/router"
 import { useRequest } from '../../hooks/useRequest'
 import { Ticket } from "../../shared/types"
 import { CustomPageContext } from "../_app"
 
 const TicketShow: NextPage<TicketShowParams> = ({ ticket }) => {
-    const { execute, errors } = useRequest({
+    const { execute, errors } = useRequest<Order>({
         url: '/api/orders',
         method: 'post',
         body: {
             ticketId: ticket.id,
         },
-        // onSuccess: (order) => Router.push(`$`),
-        onSuccess: (order) => console.log(order),
+        onSuccess: (order) => Router.push(`/orders/${order.id}`),
     })
 
     const formattedNumber = ticket.price.toLocaleString("en-US", {style:"currency", currency:"USD"});
@@ -22,7 +23,7 @@ const TicketShow: NextPage<TicketShowParams> = ({ ticket }) => {
             <h4>{formattedNumber}</h4>
             {errors}
             <button
-                onClick={execute}
+                onClick={() => execute()}
                 className="btn btn-primary"
             >
                 Purchase
