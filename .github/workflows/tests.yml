@@ -8,4 +8,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: npm i -w services/auth && npm run -w services/auth test:ci
+      - run: npm i -w auth && npm run -w auth test:ci
