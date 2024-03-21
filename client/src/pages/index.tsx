@@ -1,13 +1,20 @@
 import { NextPage } from "next"
+import Link from "next/link"
+import { Ticket } from "../shared/types"
 import { CustomPageContext } from "./_app"
 
-// @ts-ignore
 export const Landing: NextPage<LandingParams> = ({ currentUser, tickets }) => {
     const ticketList = tickets.map(ticket => {
         return (
             <tr key={ticket.id}>
                 <td>{ticket.title}</td>
                 <td>{ticket.price}</td>
+                <td>
+                    
+                    <Link href="/tickets/[ticketId]" as={`/tickets/${ticket.id}`}>
+                        View
+                    </Link>
+                </td>
             </tr>
         )
     })
@@ -20,6 +27,7 @@ export const Landing: NextPage<LandingParams> = ({ currentUser, tickets }) => {
                     <tr>
                         <th>Title</th>
                         <th>Price</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -35,15 +43,6 @@ interface LandingParams {
     tickets: Ticket[]
 }
 
-interface Ticket {
-    id: string
-    price: number
-    title: string
-    userId: string
-    version: number
-}
-
-// @ts-ignore
 Landing.getInitialProps = async (context: CustomPageContext) => {
     const { data } = await context.client.get('/api/tickets')
     return {

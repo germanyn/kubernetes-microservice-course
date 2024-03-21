@@ -26,7 +26,7 @@ export type CustomAppContext = AppContext & {
     ctx: CustomPageContext
 }
 
-export type CustomPageContext = {
+export type CustomPageContext = AppContext['ctx'] & {
     client: AxiosInstance
     currentUser: any
 }

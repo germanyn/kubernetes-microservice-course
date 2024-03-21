@@ -17,7 +17,7 @@ const NewTicket: NextPage<NewTicketParams> = ({ currentUser }) => {
             title,
             price,
         },
-        onSuccess: (ticket) => Router.push('/'),
+        onSuccess: () => Router.push('/'),
     })
 
     function handlePriceBlur() {
