@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "next",
-    "docker": "docker build -t ggticketing/client ."
+    "docker": "docker build -t germanyn/client ."
   },
   "keywords": [],
   "author": "",
