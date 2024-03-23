@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "ts-node-dev --poll src/index.ts",
-    "docker:build": "docker build -t germanyn/auth .",
-    "docker:push": "docker push germanyn/auth"
+    "docker:build": "docker build -t germanyn/expiration .",
+    "docker:push": "docker push germanyn/expiration"
   },
   "jest": {
     "preset": "ts-jest",
