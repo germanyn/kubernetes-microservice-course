@@ -19,7 +19,7 @@ app.use(json())
 app.use(
     cookieSession({
         signed: false,
-        source: false,
+        secure: false,
     })
 )
 app.use(currentUser)
