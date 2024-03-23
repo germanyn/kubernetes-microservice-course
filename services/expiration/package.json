@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "ts-node-dev --poll src/index.ts",
-    "docker": "docker build -t ggticketing/expiration ."
+    "docker": "docker build -t germanyn/expiration ."
   },
   "jest": {
     "preset": "ts-jest",
