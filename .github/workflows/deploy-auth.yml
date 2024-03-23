@@ -21,7 +21,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build docker
-        run: 'npm i -w auth docker:build'
+        run: 'npm run -w auth docker:build'
 
       - name: Docker push
-        run: 'npm i -w auth docker:push'
+        run: 'npm run -w auth docker:push'
